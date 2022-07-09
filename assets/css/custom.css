@@ -1,0 +1,70 @@
+.success-msg {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+.danger-msg {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.adminCard {
+    padding: 40px 0;
+    width: 23%;
+    min-width: 200px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    background: whitesmoke;
+    box-shadow: 5px 5px 18px #c3c3c3,
+        -5px -5px 18px #fdfdfd;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+.adminCard:hover {
+    border-radius: 10px;
+    background: whitesmoke;
+    box-shadow: 5px 5px 18px rgb(255, 192, 192),
+        -5px -5px 18px  #c3c3c3;
+}
+
+.adminCard-icon {
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.adminCard-icon1 {
+    color: purple;
+    background-color: rgb(255, 226, 255);
+}
+
+.adminCard-icon2 {
+    color: blue;
+    background-color: rgb(220, 220, 255);
+
+}
+
+.adminCard-icon3 {
+    color: darkred;
+    background-color: rgb(255, 230, 230);
+}
+
+.adminCard-icon4 {
+    color: orange;
+    background-color: rgb(255, 247, 231);
+
+}
