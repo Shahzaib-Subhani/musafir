@@ -70,7 +70,7 @@ export async function updateCarStatus(transportName, carType, status) {
 }
 
 
-export async function editCarFunc(transportName, carCompany){
+export async function editCarFunc(transportName, carCompany,iconUrl){
     // document.body.scrollTop = 100;
     // document.documentElement.scrollTop = document.body.scrollTop = 1000;
 
@@ -83,11 +83,13 @@ export async function editCarFunc(transportName, carCompany){
     const docSnap = await getDoc(docRef);
     var carArrayCollection = docSnap.data();
     var carObj =  carArrayCollection[carCompany];
-
+   var icon =  carArrayCollection[iconUrl];
 
     transportNameInput.value = transportName;
     carTypeInput.value = carObj.carCompany;
+    sessionStorage.setItem('icon_url',carObj.iconUrl);
 
+    
 
 
     var carBrandRow = "";
@@ -99,7 +101,7 @@ export async function editCarFunc(transportName, carCompany){
     })
 
     console.log(carBrandRow, " i am car brand row");
-
+    console.log(sessionStorage.getItem('icon_url'));
     
 
 
@@ -113,7 +115,7 @@ export async function delCollection(){
     alert("life");
 }
 
-
+ 
 
 
 

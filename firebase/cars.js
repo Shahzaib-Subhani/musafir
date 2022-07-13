@@ -53,10 +53,18 @@ function addCars(action, cars, carType, transportName,) {
     /* Creating Object */
     var key = carType;
     var obj = {};
+    let icon_url;
+    if(sessionStorage.getItem('icon_url') !== ''){
+        icon_url = sessionStorage.getItem('icon_url');
+    }
+    else {
+        icon_url = '';
+    }
     obj[key] = {
         carBrand: carList,
         carCompany: carType,
         status: true,
+        iconUrl: icon_url,
         timestamp: Date.now()
     }
 console.log(obj)
@@ -66,7 +74,8 @@ console.log(obj)
         transportName = transportName.toLowerCase();
         setDoc(doc(db, "transport", transportName),
             obj, {
-                merge: true
+                merge: true,
+                
             }
         ).then(msg => {
             if (msg === undefined) {
@@ -77,6 +86,7 @@ console.log(obj)
                 document.getElementById("carForm").reset();
                 setTimeout(() => {
                     document.getElementById("carMsg").innerHTML = '';
+                    
                     // location.reload();
                 }, 2000);
             }
@@ -109,6 +119,8 @@ console.log(obj)
                 if (confirm("Transport already exist. \n Do you want to over write?")) {
                     console.log(transportName, obj, "Car Collection Over Written message");
                     setCarDoc(transportName, obj, "Car Collection Over Written");
+                    sessionStorage.removeItem("icon_url");
+                    console.log(sessionStorage.getItem('icon_url'));
                 } else {
                     document.getElementById("carForm").reset();
                     console.log('2nd else')
@@ -123,13 +135,17 @@ console.log(obj)
             setCarDoc(transportName, obj, "Car Collection Updated");
             document.getElementById("carForm").reset();
             addNewCars.value = "add";
-
             addCarCollection();
+            sessionStorage.removeItem("icon_url");
+            console.log(sessionStorage.getItem('icon_url'))
 
 
         }
     }else{
         setCarDoc(transportName, obj, "Car Collection Added Successfully");
+        sessionStorage.removeItem("icon_url");
+        console.log(sessionStorage.getItem('icon_url'))
+        
     }
 
 
@@ -208,7 +224,7 @@ function addCarCollection() {
                 </button>
               </td>
               <td class="align-middle text-center ">
-              <button onClick="editCar(this)" value="${companyType},${carObj.carCompany}" class='btn btn-sm p-2 
+              <button onClick="editCar(this)" value="${companyType},${carObj.carCompany},${carObj.iconUrl}" class='btn btn-sm p-2 
               btn-info'>
               Edit
               </button>
@@ -315,14 +331,8 @@ export function uploadImage(e)
       },
       () => {
         getDownloadURL(uploadtask.snapshot.ref).then((downloadURL)=> {
-          var ref  = doc(db , "transport" , "123456789");
-          const refdoc =  setDoc(ref, {
-                        
-                        Image_URL: downloadURL
-
-                }).then(()=>{
-                  alert("Ok");
-                })
+            sessionStorage.setItem("icon_url", downloadURL);
+            console.log(sessionStorage.getItem("icon_url"));
             
           })
       }
