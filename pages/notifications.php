@@ -5,9 +5,9 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
           <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-          <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Add City</li>
+          <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Add Notification</li>
         </ol>
-        <h6 class="font-weight-bolder mb-0">Add City</h6>
+        <h6 class="font-weight-bolder mb-0">Add Notifcation</h6>
       </nav>
       <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
         <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -105,7 +105,7 @@
         <div class="card mb-4">
           <div class="card-header pb-0 p-5">
             <div>
-              <h6>Add New FAQ</h6>
+              <h6>Add New Notification</h6>
               <div id="cityMsg"></div>
             </div>
           </div>
@@ -113,14 +113,31 @@
 
             <!-- form -->
             <form role="form" id="cityForm" class="w-100">
-              <label>Question : </label>
+              <label>Title : </label>
               <div class="mb-3">
-                <input id="question" type="text" class="form-control" placeholder="Question">
+                <input id="title" type="text" class="form-control" placeholder="Title" required>
               </div>
 
-              <label>Answer : </label>
+              <label>Description : </label>
               <div class="mb-3">
-                <input id="answer" type="text" class="form-control" placeholder="Answer">
+                <input id="desc" type="text" class="form-control" placeholder="Description" required>
+              </div>
+
+              <label>Category : </label>
+              <div class="mb-3">
+                <select name="" id="category" class="form-control" required>
+                    <option value="" selected disabled>Select Category</option>
+                    <option value="warning">Warning</option>
+                    <option value="general">General</option>
+                    <option value="help">Guide/Help</option>
+                </select>
+              </div>
+
+              <label>User : </label>
+              <div class="mb-3">
+                <select name="" id="userCollection" class="form-control" required>
+                    
+                </select>
               </div>
               
               
@@ -133,22 +150,7 @@
             <!--@ form -->
           </div>
 
-          <div class="px-5 mt-5 pb-5">
-            <table style="width:100%" id="citiesTable">
-              <thead>
-                <tr class="text-center">
-                  <th scope="col">#</th>
-                  <th scope="col">Question</th>
-                  <th scope="col">Answer</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Change Status</th>
-                  
-                </tr>
-              </thead>
-              <tbody id="citiesCollections" class="text-center text-uppercase">
-              </tbody>
-            </table>
-          </div>
+         
         </div>
       </div>
     </div>
@@ -179,24 +181,24 @@
 
 
 
-function updateProfileStsBtn(uid, sts){
-  document.getElementById("user"+uid+"1").innerText = "Loading.";
-  tableModuel.updateProfileStatus(uid, sts).then(res =>{
-    tableModuel.addCitiesCollection();
-  })
-}
+// function updateProfileStsBtn(uid, sts){
+//   document.getElementById("user"+uid+"1").innerText = "Loading.";
+//   tableModuel.updateProfileStatus(uid, sts).then(res =>{
+//     tableModuel.addCitiesCollection();
+//   })
+// }
  
 </script>
 
 <script type="module">
- import {addCitiesCollection} from "./firebase/faqs.js";
+ import {addCitiesCollection} from "./firebase/notification.js";
   tableModuel.addCitiesCollection = addCitiesCollection;
 
-  import {
-    updateProfileStatus
-  } from "./firebase/faqsFunc.js"
+//   import {
+//     updateProfileStatus
+//   } from "./firebase/faqsFunc.js"
  
-  tableModuel.updateProfileStatus = updateProfileStatus;
+//   tableModuel.updateProfileStatus = updateProfileStatus;
  
 
 
@@ -206,4 +208,3 @@ function updateProfileStsBtn(uid, sts){
 
 
 
-<script type="module" src="./firebase/faqs.js"></script>

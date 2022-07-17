@@ -20,10 +20,10 @@
 
 
           <li class="nav-item dropdown pe-2 d-flex align-items-center">
-            <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa fa-bell cursor-pointer"></i>
-            </a>
-            <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+          <a href="index.php?page=profile" class="nav-link text-body p-0" >
+               <img src="assets/img/avatar.png" alt="" width="25">
+              </a>
+            <!-- <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
               <li class="mb-2">
                 <a class="dropdown-item border-radius-md" href="javascript:;">
                   <div class="d-flex py-1">
@@ -91,7 +91,7 @@
                   </div>
                 </a>
               </li>
-            </ul>
+            </ul> -->
           </li>
         </ul>
       </div>
