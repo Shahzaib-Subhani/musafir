@@ -46,18 +46,20 @@ function addCity() {
     var user = document.getElementById("userCollection").value;
 
     if(title == '' || desc == '' || category == ''|| user == ''){
-        document.getElementById("carMsg").innerHTML = `<p class="danger-msg">Please Fill All fields</p>`;
+        document.getElementById("cityMsg").innerHTML = `<p class="danger-msg">${title == '' ? 'Title' : desc == '' ? 'Description' : category == '' ? 'Category' : user == '' ? 'User':null} field is empty</p>`;
         setTimeout(() => {
-            document.getElementById("carMsg").innerHTML = '';
+            document.getElementById("cityMsg").innerHTML = '';
             
             // location.reload();
-        }, 2000);
+        }, 4000);
     }
-    if(user == 'all'){
+    else{
+        if(user == 'all'){
         user =  allusers();
     }
     let notification = [title,desc,category,user];
     console.log(notification);
+    }
 
     // Add a new document in collection "cities"
     
@@ -81,7 +83,7 @@ async function addCitiesCollection() {
    
     
     let num = 1;
-    let citiesRow = `<option selected disabled > Select User </option>
+    let citiesRow = `<option selected disabled value='' > Select User </option>
     <option value='all' > All Users </option>`;
     querySnapshot.docs
         .map((doc) => {
