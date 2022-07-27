@@ -40,29 +40,53 @@ async function allusers(){
 function addCity() {
   
 
-    var title = document.getElementById("title").value;
-    var desc = document.getElementById("desc").value;
-    var category = document.getElementById("category").value;
-    var user = document.getElementById("userCollection").value;
+    // var title = document.getElementById("title").value;
+    // var desc = document.getElementById("desc").value;
+    // var category = document.getElementById("category").value;
+    // var user = document.getElementById("userCollection").value;
 
-    if(title == '' || desc == '' || category == ''|| user == ''){
-        document.getElementById("cityMsg").innerHTML = `<p class="danger-msg">${title == '' ? 'Title' : desc == '' ? 'Description' : category == '' ? 'Category' : user == '' ? 'User':null} field is empty</p>`;
-        setTimeout(() => {
-            document.getElementById("cityMsg").innerHTML = '';
+    // if(title == '' || desc == '' || category == ''|| user == ''){
+    //     document.getElementById("cityMsg").innerHTML = `<p class="danger-msg">${title == '' ? 'Title' : desc == '' ? 'Description' : category == '' ? 'Category' : user == '' ? 'User':null} field is empty</p>`;
+    //     setTimeout(() => {
+    //         document.getElementById("cityMsg").innerHTML = '';
             
-            // location.reload();
-        }, 4000);
-    }
-    else{
-        if(user == 'all'){
-        user =  allusers();
-    }
-    let notification = [title,desc,category,user];
-    console.log(notification);
-    }
+    //         // location.reload();
+    //     }, 4000);
+    // }
+    // else{
+    //     if(user == 'all'){
+    //     user =  allusers();
+    // }
+    // let notification = [title,desc,category,user];
+    // console.log(notification);
+    // }
 
     // Add a new document in collection "cities"
     
+
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = {
+  title: "jahanzaib",
+  message: "testing app",
+  data: {},
+  tokens: [
+    "fx6D7MXjRsunHVJX3leJvH:APA91bEueD7CTBfVfCxu-TAL6_aAO2nETPXrEoLY_JcLvwZLRy-5GDUVmP7aomx85ZeyhH3xJq-mdUPoS6S5Q25Kwt3JKoIyBLqj3E6MOpcY9m9Y5rZZZJhS9FRvteSbtc7qJzwFNHti"
+  ]
+};
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  mode: 'no-cors'
+};
+console.log(requestOptions)
+fetch("https://musafirpushnotifications21.herokuapp.com/notifications", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 
 
 
@@ -115,4 +139,6 @@ export {
 window.onload = async () => {
     addCitiesCollection();
 };
+
+
 
