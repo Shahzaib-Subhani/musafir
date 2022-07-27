@@ -21,30 +21,19 @@ async function allusers(){
     
     let num = 1;
     const users = [];
-    const tokens = [];
-    
-    querySnapshot.docs
-        .map((doc) => {
-            let name = doc.data()?.name;
-            let dtoken = doc.data()?.deviceToken;
-    
-            let phone = doc.data()?.phone;
-            if(dtoken.length > 0 ){
-            users.push({token : dtoken})
-            }
-
-            
-
-            users.map((item, index) => {
-              if (item.token.length > 0) {
-                tokens.push(...item.token);
-                return;
-              }
-            });
-            
-            
-        });
+   querySnapshot.docs.map((doc)=>{
+       if(doc.data().deviceToken){
+           if((doc.data().deviceToken).length > 0 ){
+            (doc.data().deviceToken).map(item =>{
+                if(item !== ""){
+                    tokens.push(item)
+                }
+            })
+           }
+       }
+    })
             console.log(tokens)
+            return tokens;
             
   }
 
