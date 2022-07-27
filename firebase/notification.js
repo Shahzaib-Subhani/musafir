@@ -19,20 +19,33 @@ async function allusers(){
     const querySnapshot = await getDocs(collection(db, "users"))
    
     
-        let num = 1;
-    let users = [];
-        querySnapshot.docs
-            .map((doc) => {
-            
-                let age = doc.data()?.uid;
-        
-                
-            
-                users.push(age);
+    let num = 1;
+    const users = [];
+    const tokens = [];
+    
+    querySnapshot.docs
+        .map((doc) => {
+            let name = doc.data()?.name;
+            let dtoken = doc.data()?.deviceToken;
+    
+            let phone = doc.data()?.phone;
+            if(dtoken.length > 0 ){
+            users.push({token : dtoken})
+            }
 
+            
+
+            users.map((item, index) => {
+              if (item.token.length > 0) {
+                tokens.push(...item.token);
+                return;
+              }
             });
-
-            return users;
+            
+            
+        });
+            console.log(tokens)
+            
   }
 
  
@@ -40,53 +53,90 @@ async function allusers(){
 function addCity() {
   
 
-    // var title = document.getElementById("title").value;
-    // var desc = document.getElementById("desc").value;
-    // var category = document.getElementById("category").value;
-    // var user = document.getElementById("userCollection").value;
+    var title = document.getElementById("title").value;
+    var desc = document.getElementById("desc").value;
+    var category = document.getElementById("category").value;
+    var user = document.getElementById("userCollection").value;
 
-    // if(title == '' || desc == '' || category == ''|| user == ''){
-    //     document.getElementById("cityMsg").innerHTML = `<p class="danger-msg">${title == '' ? 'Title' : desc == '' ? 'Description' : category == '' ? 'Category' : user == '' ? 'User':null} field is empty</p>`;
-    //     setTimeout(() => {
-    //         document.getElementById("cityMsg").innerHTML = '';
+    if(user !== '' && user !== 'all'){
+      let token = user.split(",");
+    
+        console.log(token[0]);
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        
+        var raw = JSON.stringify({
+          "title": title,
+          "message": desc,
+          "data": {},
+          "tokens": [
+            token[0] 
+          ]
+        });
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+        
+        fetch("https://musafirpushnotifications21.herokuapp.com/notifications", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+    }
+
+    if(title == '' || desc == '' || category == ''|| user == ''){
+        document.getElementById("cityMsg").innerHTML = `<p class="danger-msg">${title == '' ? 'Title' : desc == '' ? 'Description' : category == '' ? 'Category' : user == '' ? 'User':null} field is empty</p>`;
+        setTimeout(() => {
+            document.getElementById("cityMsg").innerHTML = '';
             
-    //         // location.reload();
-    //     }, 4000);
-    // }
-    // else{
-    //     if(user == 'all'){
-    //     user =  allusers();
-    // }
-    // let notification = [title,desc,category,user];
-    // console.log(notification);
-    // }
+            // location.reload();
+        }, 4000);
+        
+    }
 
-    // Add a new document in collection "cities"
+    
+    else{
+        if(user == 'all'){
+        user =  allusers();
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        
+        var raw = JSON.stringify({
+          "title": title,
+          "message": desc,
+          "data": {},
+          "tokens": [
+            user
+          ]
+        });
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+        
+        fetch("https://musafirpushnotifications21.herokuapp.com/notifications", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+    }
+    
     
 
-    var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+   
+    
 
-var raw = {
-  title: "jahanzaib",
-  message: "testing app",
-  data: {},
-  tokens: [
-    "fx6D7MXjRsunHVJX3leJvH:APA91bEueD7CTBfVfCxu-TAL6_aAO2nETPXrEoLY_JcLvwZLRy-5GDUVmP7aomx85ZeyhH3xJq-mdUPoS6S5Q25Kwt3JKoIyBLqj3E6MOpcY9m9Y5rZZZJhS9FRvteSbtc7qJzwFNHti"
-  ]
-};
+    }
 
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  mode: 'no-cors'
-};
-console.log(requestOptions)
-fetch("https://musafirpushnotifications21.herokuapp.com/notifications", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
+   
+    
+    
 
 
 
@@ -107,21 +157,25 @@ async function addCitiesCollection() {
    
     
     let num = 1;
+    let my = [];
+    
     let citiesRow = `<option selected disabled value='' > Select User </option>
     <option value='all' > All Users </option>`;
     querySnapshot.docs
         .map((doc) => {
             let name = doc.data()?.name;
-            let age = doc.data()?.uid;
+            let dtoken = doc.data()?.deviceToken;
     
             let phone = doc.data()?.phone;
-          
+            my.push(dtoken)
+            
             return citiesRow += `
             
-            <option value='${age}'>${name}</option>`;
-
+            <option value='${dtoken}'>${name}</option>`;
+            
         });
-
+         
+       
 
     // var carRows = "";
 
