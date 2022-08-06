@@ -134,11 +134,33 @@
               </div>
 
               <label>User : </label>
-              <div class="mb-3">
-                <select name="" id="userCollection" class="form-control" required>
-                    
-                </select>
+              <div class="mb-3 d-flex justify-content-evenly">
+                <div class="usertab">
+                
+              <input type="radio" value="specific" name="user" id="specific">
+              <label for="" id="new">Specific Users</label>
+                </div>
+              <div class="usertab">
+              
+              <input type="radio" value="all" name="user" id="all">
+              <label for="">All Users</label>
               </div>
+                
+              </div>
+
+              <div class="mb-3 d-flex justify-content-center">
+                  <div class="multiselect">
+                              <div class="selectBox" onclick="showCheckboxes()">
+                                <select name="" id="userCollection" class="form-control"  required>
+                                <option selected disabled value='' > Select User </option>
+                                </select>
+                                <div class="overSelect"></div>
+                              </div>
+                              <div id="checkboxes">
+                                
+                              </div>
+                            </div>
+                  </div>
               
               
               <!--@ table for add dynamic fields -->
@@ -157,17 +179,54 @@
   </div>
 </main>
 
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- <script async type="module" src="./firebase/cars.js"></script> -->
 
 <script>
-  $(document).ready(function() {
-    setTimeout(() => {
-      $('#citiesTable').DataTable();
-    }, 2000);
-  });
+  // $(document).ready(function() {
+  //   setTimeout(() => {
+  //     $('#citiesTable').DataTable();
+  //   }, 2000);
+  // });
+  function hideSection(){
+   
+    if(document.getElementById('specific').checked > 0){
+      $('#userCollection').show();
+     
+    }
+    if(document.getElementById('all').checked > 0){
+      $('#userCollection').hide();
+      
+    }
+  
+  }
+
+  $(document).ready(function(){
+    $('#userCollection').hide();
+    $('#specific').click(function(){
+      hideSection();
+    })
+    $('#all').click(function(){
+      hideSection();
+    })
+  })
 
 
+ 
+  var expanded = false;
+
+function showCheckboxes() {
+  var checkboxes = document.getElementById("checkboxes");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}
 
  
 </script>
