@@ -106,7 +106,7 @@
             <div class="d-flex w-100  justify-content-between">
               <h6>Add New City Detail</h6>
               <div id="carMsg"></div>
-              <div id="delCarCollection">
+              <div id="delCarCollection"> 
               </div>
             </div>
           </div>
@@ -117,10 +117,7 @@
                 <input id="transportName" value="" type="text" class="form-control" placeholder="Transport Name">
               </div>
 
-              <label>Transport Icon</label>
-              <div class="mb-3">
-                <input id="transportIcon" value="" onchange="upload(event)" type="file" accept="image/*" class="form-control" placeholder="Transport Name">
-              </div>
+              
               <label>Car Type</label>
               <table id="dynamic_fields" class=" w-100">
                 <tr>
@@ -139,7 +136,42 @@
             </form>
           </div>
         </div>
-      </div>
+
+
+        <div class="card mb-4">
+        <div class="card-header pb-0 p-5">
+            <div class="d-flex w-100  justify-content-between">
+              <h6>Add Icon to Transport</h6>
+              <div id="transMsg"></div>
+            </div>
+          </div>
+          <div class="card-body px-0 pt-0 pb-2 m-auto p-5 " style="width: 90% !important;">
+            <form role="form" id="iconForm" class="w-100">
+            <label>Select Transport</label>
+              <div class="mb-3">
+                
+                  <select name="" id="listTransport" class="form-control" required>
+
+                  </select>
+                
+              </div>
+            <label>Transport Icon</label>
+              <div class="mb-3">
+                <input id="transportIcon" value="" onchange="upload(event)" type="file" accept="image/*" class="form-control" placeholder="Transport Name">
+              </div>
+
+              <div class="text-center">
+                <button id="addIcon" type="button" value="add" onclick="iconadd()"  class="btn bg-gradient-info w-100 mt-4 mb-3 ">Submit</button>
+              </div>
+          </div>
+              
+            </form>
+          </div>
+        </div>
+
+
+
+        
       <div class="card">
         <div class="card-body" id="carCard"> 
           <h3 class="mb-3">Car Collections</h3>
@@ -227,69 +259,24 @@
 <script>
   // Upload Icon Function
   const refrence={}
-  //  function uploadImage(e)
-  // {
-  //   console.log(e.target.files[0].type)
-  //   var imgname = e.target.files[0].type;
-  //   if(imgname == 'image/png'){
-  //     var imagetoupload =e.target.files[0];
-
-  //       var imgname = e.target.files[0].name;
-
-  //       const metaData = {
-  //           contentType : imagetoupload.type
-
-  //       }
-
-
-
-  //       const storageref = refrence.ref(refrence.storage, "transport/"+imgname);
-
-  //       const uploadtask = refrence.uploadBytesResumable(storageref, imagetoupload , metaData);
-
-  //       uploadtask.on('state-changed', (snapshot) => {
-  //           var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            
-
-  //         console.log(progress)
-  //       },
-  //       (error) => {
-  //           alert("Image Not Uploaded");
-  //       },
-  //       () => {
-  //         refrence.getDownloadURL(uploadtask.snapshot.ref).then((downloadURL)=> {
-  //           var ref  = refrence.doc(refrence.db , "transport" , "123456789");
-  //           const refdoc =  refrence.setDoc(ref, {
-                          
-  //                         Image_URL: downloadURL
-
-  //                 }).then(()=>{
-  //                   alert("Ok");
-  //                 })
-              
-  //           })
-  //       }
-  //       )
-  //           }
-
-
-  //           else{
-  //             alert("Only PNG Format  is Allowed !");
-  //           }
-     
   
-  // }
 
  function upload(e){ 
 
     refrence.upload(e);
  }
+
+ function iconadd(){
+  refrence.addicon();
+ }
  
 </script>
 <script type="module">
 
- import { uploadImage  } from "./firebase/cars.js";
+ import { uploadImage,transportlist,addIcon  } from "./firebase/cars.js";
         refrence.upload = uploadImage;
+        refrence.transport = transportlist;
+        refrence.addicon = addIcon;
       
 </script>
 </body>

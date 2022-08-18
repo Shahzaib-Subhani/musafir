@@ -53,18 +53,12 @@ function addCars(action, cars, carType, transportName,) {
     /* Creating Object */
     var key = carType;
     var obj = {};
-    let icon_url;
-    if(sessionStorage.getItem('icon_url') !== ''){
-        icon_url = sessionStorage.getItem('icon_url');
-    }
-    else {
-        icon_url = '';
-    }
+    
     obj[key] = {
         carBrand: carList,
         carCompany: carType,
         status: true,
-        iconUrl: icon_url,
+       
         timestamp: Date.now()
     }
 console.log(obj)
@@ -119,8 +113,7 @@ console.log(obj)
                 if (confirm("Transport already exist. \n Do you want to over write?")) {
                     console.log(transportName, obj, "Car Collection Over Written message");
                     setCarDoc(transportName, obj, "Car Collection Over Written");
-                    sessionStorage.removeItem("icon_url");
-                    console.log(sessionStorage.getItem('icon_url'));
+                  
                 } else {
                     document.getElementById("carForm").reset();
                     console.log('2nd else')
@@ -136,15 +129,13 @@ console.log(obj)
             document.getElementById("carForm").reset();
             addNewCars.value = "add";
             addCarCollection();
-            sessionStorage.removeItem("icon_url");
-            console.log(sessionStorage.getItem('icon_url'))
+           
 
 
         }
     }else{
         setCarDoc(transportName, obj, "Car Collection Added Successfully");
-        sessionStorage.removeItem("icon_url");
-        console.log(sessionStorage.getItem('icon_url'))
+       
         
     }
 
@@ -187,7 +178,7 @@ function addCarCollection() {
 
             console.log(newCarCollection);
 
-            var carRows = "";
+            var carRows = ""; 
             var num = 1;
             newCarCollection.map(car => {
 
@@ -261,6 +252,9 @@ export {
 /* On Load Window show Car Collection data */
 window.onload = async () => {
     addCarCollection();
+    transportlist ();
+    sessionStorage.removeItem('icon_url');
+    
 };
 
 
@@ -295,6 +289,44 @@ window.onload = async () => {
 
 
 // updateCarStatus("sedan", "honda", true);
+async function transportlist() {
+  
+    const querySnapshot = await getDocs(collection(db, "transport"))
+   
+    
+    let num = 1;
+    let my = [];
+    
+    let transportRow='<option value="" disabled selected>Select Transport</option>' ;
+    querySnapshot.docs
+        .map((doc) => {
+            let name = doc.id;
+            console.log(name);
+             return transportRow += `
+             
+                        <option value='${name}'>${name.toUpperCase()}</option>`;
+            
+            return
+        })
+         
+       
+
+    // var carRows = "";
+
+  
+    document.getElementById("listTransport").innerHTML = transportRow;
+
+
+}
+
+
+export {
+    transportlist
+}
+
+
+
+
 
 
 
@@ -321,9 +353,11 @@ export function uploadImage(e)
       const uploadtask = uploadBytesResumable(storageref, imagetoupload , metaData);
 
       uploadtask.on('state-changed', (snapshot) => {
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          
 
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          $('#addIcon').text('Image is Uploading, Please Wait..');
+          $('#addIcon').addClass('disabled');
+        
         console.log(progress)
       },
       (error) => {
@@ -331,6 +365,8 @@ export function uploadImage(e)
       },
       () => {
         getDownloadURL(uploadtask.snapshot.ref).then((downloadURL)=> {
+            $('#addIcon').text('Submit');
+            $('#addIcon').removeClass('disabled');
             sessionStorage.setItem("icon_url", downloadURL);
             console.log(sessionStorage.getItem("icon_url"));
             
@@ -346,3 +382,43 @@ export function uploadImage(e)
    
 
 }
+
+
+export async function addIcon()
+{
+    const transport_name = document.getElementById('listTransport').value;
+   
+    if(transport_name == ''){
+        alert('Transport is Required !');
+    }
+    else{
+        
+        const imageURL = sessionStorage.getItem('icon_url');
+       
+        if( imageURL == null){
+           
+           alert('Image is required !');
+        }
+        else{
+             const washingtonRef = doc(db, "transport", transport_name);
+    
+            // Set the "capital" field of the city 'DC'
+            await updateDoc(washingtonRef, {
+            iconUrl: imageURL
+            }).then(response => {
+               sessionStorage.removeItem('icon_url');
+               document.getElementById("transMsg").innerHTML = `<p class="success-msg">Image Uploaded Successfully</p>`;
+               document.getElementById("iconForm").reset();
+               setTimeout(() => {
+                document.getElementById("transMsg").innerHTML = '';
+                
+            }, 3000);
+    
+            });
+          
+        }
+    }
+   
+    
+}
+

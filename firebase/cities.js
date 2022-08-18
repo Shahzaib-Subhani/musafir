@@ -40,23 +40,25 @@ function addCity() {
     areaList = areaList.filter(el => el != "");
     areaList = areaList.map(area => {
         return {
-            areaName: area,
+            areaName: area.toLowerCase(),
             areaStatus: true
         }
     })
 
     var city = document.getElementById("city").value;
+    var lowcity = city.toLowerCase();
     var province = document.getElementById("province").value;
+    var lowprovince = province.toLowerCase()
 
     // Add a new document in collection "cities"
-    setDoc(doc(db, "cities", city), {
+    setDoc(doc(db, "cities", lowcity), {
         areas: areaList,
-        province: province,
+        province: lowprovince,
         status: true
     }).then(msg => {
         if (msg === undefined) {
             document.getElementById("cityForm").reset();
-            document.getElementById("cityMsg").innerHTML = '<p class="success-msg"> City '+addNewCity.value+'</p>';
+            document.getElementById("cityMsg").innerHTML = '<p class="success-msg"> City '+addNewCity.value+'ed</p>';
             setTimeout(() => {
                 document.getElementById("cityMsg").innerHTML = '';
                 addNewCity.value = 'add';

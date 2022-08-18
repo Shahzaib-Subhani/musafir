@@ -64,7 +64,7 @@ export async function updateCarStatus(transportName, carType, status) {
             addCarCollection();
         }
 
-    });
+    }); 
 
 
 }
@@ -87,7 +87,7 @@ export async function editCarFunc(transportName, carCompany,iconUrl){
 
     transportNameInput.value = transportName;
     carTypeInput.value = carObj.carCompany;
-    sessionStorage.setItem('icon_url',carObj.iconUrl);
+    // sessionStorage.setItem('icon_url',carObj.iconUrl);
 
     
 
@@ -101,7 +101,7 @@ export async function editCarFunc(transportName, carCompany,iconUrl){
     })
 
     console.log(carBrandRow, " i am car brand row");
-    console.log(sessionStorage.getItem('icon_url'));
+    // console.log(sessionStorage.getItem('icon_url'));
     
 
 
